@@ -50,8 +50,15 @@ Only these runtime files should go into Chrome extension ZIP packages.
   - `node --check popup.js`
 - Codex memory and hook setup is installed under `.agent-memory` and `.codex`.
 - Release packaging is available through `scripts/package-extension.ps1`.
-- The packaging routine was test-run with suffix `test`; the ZIP contained only
-  runtime extension files and the test artifact was removed.
+- Release ZIPs are staged under a top-level `prolific-watcher/` folder and
+  contain only runtime extension files inside that folder.
+- The packaging routine was test-run with temporary output; the ZIP contained
+  only runtime extension files under `prolific-watcher/` and the test artifact
+  was removed.
+- New ZIPs are created only on explicit request.
+- Runtime extension updates require a `manifest.json` version bump before
+  packaging: patch for small changes, minor for larger updates. Repo-only
+  workflow/docs/memory changes do not require a runtime version bump.
 - Low-risk dead-code cleanup removed unused helper declarations from
   `background.js` and `popup.js`; `scripts/check-dead-code-cleanup.js` guards
   against those exact markers returning.

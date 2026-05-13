@@ -1,13 +1,13 @@
 ﻿# Handoff
 
 Last updated: 2026-05-13
-Update mode: Cleanup finalization
+Update mode: Packaging routine update
 
 ## Latest Notes
 
-Automatic handoff snapshot written by .codex/hooks/agent-protocol.ps1.
-Current task status is tracked in .agent-memory/current-task.md.
-Owner, browser, and review feedback are persisted in .agent-memory/feedback.md.
+Packaging routine updated so generated ZIP entries are inside a top-level
+`prolific-watcher/` folder. Current task status is tracked in
+.agent-memory/current-task.md.
 
 ## Git Snapshot
 
@@ -17,7 +17,9 @@ Owner, browser, and review feedback are persisted in .agent-memory/feedback.md.
 ## Working Tree
 
 ~~~text
-Memory finalization pending commit for cleanup handoff.
+Packaging script, packaging protocol wording, and memory files modified.
+Existing untracked releases/prolific-watcher-v1.5.2.zip was present at startup
+and was not modified intentionally.
 ~~~
 
 ## Current State Summary
@@ -42,4 +44,5 @@ See .agent-memory/next-steps.md.
 - Delegate implementation to Sub-Agents whenever tooling supports it.
 - No Cloudflare deployment workflow applies to this repository.
 - Do not write secrets, tokens, passwords, raw bearer tokens, or personal Prolific data into memory files.
-- Keep Chrome extension release ZIPs limited to runtime extension files only.
+- Keep Chrome extension release ZIPs limited to runtime extension files under
+  top-level `prolific-watcher/`.

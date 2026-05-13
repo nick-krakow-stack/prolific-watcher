@@ -86,17 +86,32 @@ On explicit request, create a Chrome extension ZIP with:
 powershell -NoProfile -ExecutionPolicy Bypass -File .\scripts\package-extension.ps1
 ```
 
-The ZIP must include only Chrome extension runtime files:
+The ZIP must contain a top-level `prolific-watcher/` folder with only Chrome
+extension runtime files inside it:
 
-- `manifest.json`
-- `background.js`
-- `content.js`
-- `popup.html`
-- `popup.css`
-- `popup.js`
-- `icons/*`
+- `prolific-watcher/manifest.json`
+- `prolific-watcher/background.js`
+- `prolific-watcher/content.js`
+- `prolific-watcher/popup.html`
+- `prolific-watcher/popup.css`
+- `prolific-watcher/popup.js`
+- `prolific-watcher/icons/*`
 
 The ZIP should be written under `releases/` and may be committed to GitHub when requested.
+
+Do not create a new ZIP automatically after every change. Create one only when the owner
+explicitly asks for a package.
+
+## Versioning Routine
+
+Every Chrome runtime update must update `manifest.json` version before packaging:
+
+- Small fixes and cleanups: patch bump, e.g. `1.5.2` -> `1.5.3`.
+- Larger feature updates or meaningful behavior changes: minor bump, e.g. `1.5.3` -> `1.6.0`.
+- Packaging, memory, hooks, docs, or repository-only changes do not require an extension
+  version bump unless runtime files also changed.
+
+The package filename follows the `manifest.json` version.
 
 ## Verification Before Completion
 

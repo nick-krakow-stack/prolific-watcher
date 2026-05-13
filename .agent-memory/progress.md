@@ -9,3 +9,5 @@
 - 2026-05-13 - Pushed workflow setup commit `afd34f8` to GitHub.
 - 2026-05-13 - Delegated low-risk dead-code cleanup; removed unused background/popup declarations and added static cleanup check.
 - 2026-05-13 - Pushed cleanup commit `b19c86c` to GitHub.
+- 2026-05-13 - Updated release packaging so ZIP entries are under top-level `prolific-watcher/`; verified temporary package entries and forbidden-file count.
+- 2026-05-13 - Recorded owner routine: do not auto-create ZIPs; bump `manifest.json` version for runtime updates before packaging.

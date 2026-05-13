@@ -5,6 +5,9 @@ param(
 
 $ErrorActionPreference = "Stop"
 
+Add-Type -AssemblyName System.IO.Compression
+Add-Type -AssemblyName System.IO.Compression.FileSystem
+
 $repoRoot = Split-Path -Parent $PSScriptRoot
 $manifestPath = Join-Path $repoRoot "manifest.json"
 
@@ -33,6 +36,8 @@ $zipName = "prolific-watcher-v$version$safeSuffix.zip"
 $zipPath = Join-Path $outputRoot $zipName
 $tmpRoot = Join-Path $repoRoot ".tmp"
 $staging = Join-Path $tmpRoot ("extension-package-" + [guid]::NewGuid().ToString("N"))
+$packageRootName = "prolific-watcher"
+$packageRoot = Join-Path $staging $packageRootName
 
 $runtimeFiles = @(
   "manifest.json",
@@ -49,14 +54,14 @@ $runtimeDirs = @(
 
 try {
   New-Item -ItemType Directory -Force -Path $outputRoot | Out-Null
-  New-Item -ItemType Directory -Force -Path $staging | Out-Null
+  New-Item -ItemType Directory -Force -Path $packageRoot | Out-Null
 
   foreach ($file in $runtimeFiles) {
     $source = Join-Path $repoRoot $file
     if (-not (Test-Path $source)) {
       throw "Required runtime file missing: $file"
     }
-    Copy-Item -LiteralPath $source -Destination (Join-Path $staging $file)
+    Copy-Item -LiteralPath $source -Destination (Join-Path $packageRoot $file)
   }
 
   foreach ($dir in $runtimeDirs) {
@@ -64,19 +69,34 @@ try {
     if (-not (Test-Path $source)) {
       throw "Required runtime directory missing: $dir"
     }
-    Copy-Item -LiteralPath $source -Destination (Join-Path $staging $dir) -Recurse
+    Copy-Item -LiteralPath $source -Destination (Join-Path $packageRoot $dir) -Recurse
   }
 
   if (Test-Path $zipPath) {
     Remove-Item -LiteralPath $zipPath -Force
   }
 
-  Compress-Archive -Path (Join-Path $staging "*") -DestinationPath $zipPath -CompressionLevel Optimal
+  $archive = [System.IO.Compression.ZipFile]::Open($zipPath, [System.IO.Compression.ZipArchiveMode]::Create)
+  try {
+    $stagingPrefix = $staging.TrimEnd("\", "/") + [System.IO.Path]::DirectorySeparatorChar
+    Get-ChildItem -LiteralPath $packageRoot -File -Recurse | ForEach-Object {
+      $relativePath = $_.FullName.Substring($stagingPrefix.Length)
+      $entryName = $relativePath -replace "\\", "/"
+      [System.IO.Compression.ZipFileExtensions]::CreateEntryFromFile(
+        $archive,
+        $_.FullName,
+        $entryName,
+        [System.IO.Compression.CompressionLevel]::Optimal
+      ) | Out-Null
+    }
+  } finally {
+    $archive.Dispose()
+  }
 
   $entries = [System.IO.Compression.ZipFile]::OpenRead($zipPath)
   try {
     $forbidden = $entries.Entries | Where-Object {
-      $_.FullName -match '(^|/)(\.git|\.codex|\.agent-memory|scripts|releases|\.tmp)(/|$)' -or
+      $_.FullName -match '(^|[\\/])(\.git|\.codex|\.agent-memory|scripts|releases|\.tmp)([\\/]|$)' -or
       $_.FullName -match '\.(md|ps1|toml|jsonl)$'
     }
     if ($forbidden.Count -gt 0) {

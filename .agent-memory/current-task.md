@@ -2,38 +2,34 @@
 
 Last updated: 2026-05-13
 
-## Active Task: Low-Risk Dead Code Cleanup
+## Active Task: Package ZIP Top-Level Folder And Version Routine
 
 - [x] Read startup protocol, memory files, and git status.
-- [x] Delegate implementation cleanup to a Sub-Agent.
-- [x] Review implementation diff.
-- [x] Delegate independent cleanup review to a review Sub-Agent.
-- [x] Run local verification checks.
-- [x] Commit and push cleanup.
+- [x] Demonstrate current package layout lacks `prolific-watcher/`.
+- [x] Update `scripts/package-extension.ps1`.
+- [x] Re-run packaging and inspect ZIP entries.
+- [x] Confirm no repository-only files are included.
+- [x] Record that ZIPs are only created on explicit request, not automatically.
+- [x] Record extension version bump routine.
+- [x] Run final git status and report changed files.
 
 ## Requirements
 
-1. Remove only demonstrably unused code.
-2. Do not change polling, auth, notifications, exports, storage shape, or UI behavior.
-3. Add a lightweight check for the removed dead-code markers.
-4. Keep Chrome runtime files valid JavaScript.
-
-## Cleanup Result
-
-- Removed unused `ALARM_KEEPALIVE` from `background.js`.
-- Removed unused `tryRefreshTokenFromTabBool()` from `background.js`.
-- Removed unused `formatGbp()` from `popup.js`.
-- Removed unused `formatEur()` from `popup.js`.
-- Removed unused `STATUS_APPROVED`, `STATUS_AWAITING`, `STATUS_SCREENED`, and `STATUS_PENDING_DUMMY` from `popup.js`.
-- Added `scripts/check-dead-code-cleanup.js`.
+1. Generated release ZIPs must contain a top-level `prolific-watcher/` folder.
+2. Chrome runtime files must live inside that folder.
+3. Repository-only files such as `.agent-memory`, `.codex`, `scripts`, Markdown docs, release tooling, and `.tmp` must not be included.
+4. Do not touch runtime extension files.
+5. Do not commit.
+6. Do not create a new release ZIP now; only remember the future behavior.
+7. Runtime updates must bump `manifest.json` version:
+   - patch for small changes, e.g. `1.5.2` -> `1.5.3`.
+   - minor for larger updates, e.g. `1.5.x` -> `1.6.0`.
+8. Repo-only changes do not require an extension version bump.
 
 ## Verification
 
-- `node scripts\check-dead-code-cleanup.js`
-- `node --check background.js`
-- `node --check popup.js`
-- `node --check content.js`
-- `node --check scripts\check-dead-code-cleanup.js`
-- `git diff --check`
-- Review Sub-Agent reported no findings.
-- Commit `b19c86c Remove unused extension code` pushed to `origin/main`.
+- Pre-change package check to temp output showed root-level entries such as `manifest.json`, `background.js`, and `icons\...`, with no top-level `prolific-watcher/` folder.
+- Post-change package check to temp output showed entries including `prolific-watcher/manifest.json`, `prolific-watcher/background.js`, `prolific-watcher/content.js`, `prolific-watcher/popup.html`, `prolific-watcher/popup.css`, `prolific-watcher/popup.js`, and `prolific-watcher/icons/...`.
+- Post-change ZIP inspection reported `MISSING_EXPECTED_COUNT=0`, `BAD_PREFIX_COUNT=0`, and `FORBIDDEN_COUNT=0`.
+- Final temp package inspection reported `ENTRY_COUNT=18`, `MISSING_REQUIRED_COUNT=0`, `ICON_ENTRY_COUNT=12`, `BAD_PREFIX_COUNT=0`, and `FORBIDDEN_COUNT=0`.
+- `git diff --check` exited 0.

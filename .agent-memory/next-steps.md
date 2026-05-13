@@ -23,4 +23,9 @@ powershell -NoProfile -ExecutionPolicy Bypass -File .\scripts\package-extension.
 ```
 
 - Inspect the ZIP contents.
+- Confirm entries are under top-level `prolific-watcher/` and contain no
+  repository-only files.
+- Before packaging a runtime update, update `manifest.json` version:
+  - patch for small changes, e.g. `1.5.2` -> `1.5.3`.
+  - minor for larger updates, e.g. `1.5.x` -> `1.6.0`.
 - Commit the generated ZIP under `releases/` only when requested.
