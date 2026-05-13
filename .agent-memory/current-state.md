@@ -52,6 +52,9 @@ Only these runtime files should go into Chrome extension ZIP packages.
 - Release packaging is available through `scripts/package-extension.ps1`.
 - The packaging routine was test-run with suffix `test`; the ZIP contained only
   runtime extension files and the test artifact was removed.
+- Low-risk dead-code cleanup removed unused helper declarations from
+  `background.js` and `popup.js`; `scripts/check-dead-code-cleanup.js` guards
+  against those exact markers returning.
 
 ## Operating Model
 

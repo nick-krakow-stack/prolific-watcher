@@ -5,6 +5,8 @@ Last updated: 2026-05-13
 ## Immediate
 
 - Refresh `README.md` so it matches extension version `1.5.2`.
+- Optional: manually reload the unpacked Chrome extension after the cleanup and
+  confirm popup open/start/stop still works.
 
 ## Product Backlog
 

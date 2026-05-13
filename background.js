@@ -15,7 +15,6 @@ const FX_API_URL = 'https://api.frankfurter.app/latest';
 const ALARM_POLL = 'prolific-poll';
 const ALARM_AUTH = 'prolific-auth-check';
 const ALARM_EARNINGS = 'prolific-earnings-sync';
-const ALARM_KEEPALIVE = 'prolific-keepalive';
 
 // ---- Polling-Modi ----
 // chrome.alarms hat Minimum 1 Min (in Chrome). Für Sub-Minute brauchen wir setTimeout
@@ -185,12 +184,6 @@ async function tryRefreshTokenFromTab() {
     console.error('Tab refresh failed:', e);
     return 'no_tab';
   }
-}
-
-// Legacy Wrapper für Aufrufer, die nur Boolean wollten
-async function tryRefreshTokenFromTabBool() {
-  const result = await tryRefreshTokenFromTab();
-  return result === 'success';
 }
 
 // ============================================================

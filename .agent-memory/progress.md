@@ -7,3 +7,4 @@
 - 2026-05-13 17:11:51 +02:00 - Stop hook ran and refreshed central memory snapshot.
 - 2026-05-13 17:12:28 +02:00 - Stop hook ran and refreshed central memory snapshot.
 - 2026-05-13 - Pushed workflow setup commit `afd34f8` to GitHub.
+- 2026-05-13 - Delegated low-risk dead-code cleanup; removed unused background/popup declarations and added static cleanup check.

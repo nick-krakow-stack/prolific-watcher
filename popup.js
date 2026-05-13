@@ -74,17 +74,6 @@ function formatTimeAgo(iso) {
   return then.toLocaleString('de-DE', { dateStyle: 'short', timeStyle: 'short' });
 }
 
-function formatGbp(minor) {
-  if (minor == null) return '–';
-  return '£' + (minor / 100).toFixed(2).replace('.', ',');
-}
-
-function formatEur(minor, fxRates) {
-  if (minor == null || !fxRates?.rates?.EUR) return '';
-  const eur = (minor / 100) * fxRates.rates.EUR;
-  return '≈ €' + eur.toFixed(2).replace('.', ',');
-}
-
 function send(type, payload) {
   return new Promise((resolve) => {
     chrome.runtime.sendMessage({ type, payload }, (res) => resolve(res || { ok: false }));
@@ -105,10 +94,6 @@ const STATUS_EARNED = new Set(['APPROVED', 'SCREENED-OUT', 'SCREENED OUT']);
 const STATUS_PENDING = new Set(['AWAITING REVIEW']);
 const STATUS_COUNTABLE = new Set([...STATUS_EARNED, ...STATUS_PENDING]);
 
-// Aliase für Tooltips & Aufschlüsselung
-const STATUS_APPROVED = new Set(['APPROVED']);
-const STATUS_AWAITING = STATUS_PENDING;
-const STATUS_SCREENED = new Set(['SCREENED-OUT', 'SCREENED OUT']);
 // Default für sumEarningsInRange
 const COUNTABLE_STATUSES = STATUS_COUNTABLE;
 
@@ -165,8 +150,6 @@ function formatEurEquivalent(totals, fxRates) {
   if (eurMinor === 0) return '';
   return '≈ €' + (eurMinor / 100).toFixed(2).replace('.', ',');
 }
-
-const STATUS_PENDING_DUMMY = STATUS_PENDING; // (no-op, removed duplicate definitions)
 
 function getMonthRange(offset = 0) {
   const now = new Date();

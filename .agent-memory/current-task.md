@@ -2,35 +2,37 @@
 
 Last updated: 2026-05-13
 
-## Active Task: Codex Hooks And Release Packaging Setup
+## Active Task: Low-Risk Dead Code Cleanup
 
-- [x] Review `supplement-stack` hook and memory setup.
-- [x] Decide which hooks and memory files apply to `prolific-watcher`.
-- [x] Add Orchestrator-only and Sub-Agent delegation rules.
-- [x] Add minimal Codex hook configuration.
-- [x] Add central memory files.
-- [x] Add release ZIP packaging routine.
-- [x] Run verification checks.
-- [x] Commit and push setup changes.
+- [x] Read startup protocol, memory files, and git status.
+- [x] Delegate implementation cleanup to a Sub-Agent.
+- [x] Review implementation diff.
+- [x] Delegate independent cleanup review to a review Sub-Agent.
+- [x] Run local verification checks.
+- [ ] Commit and push cleanup.
 
 ## Requirements
 
-1. Keep memory-file workflow from `supplement-stack`.
-2. Do not include Cloudflare, Wrangler, D1, KV, R2, or Pages deployment rules.
-3. Do not include multi-KI coordination rules beyond Codex Orchestrator/Sub-Agent operation.
-4. Codex should act as Orchestrator and delegate implementation work to Sub-Agents where tooling supports it.
-5. Add a packaging routine that creates a Chrome extension ZIP only on explicit request.
-6. ZIP packages must contain only Chrome runtime files, not hooks, Markdown, scripts, memory files, or Git files.
-7. ZIP packages can be committed to GitHub when requested.
+1. Remove only demonstrably unused code.
+2. Do not change polling, auth, notifications, exports, storage shape, or UI behavior.
+3. Add a lightweight check for the removed dead-code markers.
+4. Keep Chrome runtime files valid JavaScript.
+
+## Cleanup Result
+
+- Removed unused `ALARM_KEEPALIVE` from `background.js`.
+- Removed unused `tryRefreshTokenFromTabBool()` from `background.js`.
+- Removed unused `formatGbp()` from `popup.js`.
+- Removed unused `formatEur()` from `popup.js`.
+- Removed unused `STATUS_APPROVED`, `STATUS_AWAITING`, `STATUS_SCREENED`, and `STATUS_PENDING_DUMMY` from `popup.js`.
+- Added `scripts/check-dead-code-cleanup.js`.
 
 ## Verification
 
-- `powershell -NoProfile -ExecutionPolicy Bypass -File .\scripts\package-extension.ps1 -Suffix test`
-- ZIP content inspection confirmed only runtime extension files were included.
-- Test ZIP was removed after verification.
-- `powershell -NoProfile -ExecutionPolicy Bypass -File .\.codex\hooks\agent-protocol.ps1 -Mode Stop`
+- `node scripts\check-dead-code-cleanup.js`
 - `node --check background.js`
-- `node --check content.js`
 - `node --check popup.js`
+- `node --check content.js`
+- `node --check scripts\check-dead-code-cleanup.js`
 - `git diff --check`
-- Commit `afd34f8 Add Codex workflow and packaging routine` pushed to `origin/main`.
+- Review Sub-Agent reported no findings.
