@@ -1,7 +1,7 @@
 ﻿# Handoff
 
 Last updated: 2026-05-13
-Update mode: Live mode heartbeat bugfix
+Update mode: Live mode heartbeat finalization
 
 ## Latest Notes
 
@@ -11,15 +11,14 @@ status is tracked in .agent-memory/current-task.md.
 ## Git Snapshot
 
 - Branch: main
-- Last commit: b19c86c Remove unused extension code
+- Last commit: 5c7ec44 Fix live mode heartbeat
 
 ## Working Tree
 
 ~~~text
-Runtime files updated for version 1.5.3 live heartbeat behavior, plus a new
-static regression check under scripts/. Existing untracked
-releases/prolific-watcher-v1.5.2.zip was present at startup and was not
-modified intentionally. No ZIP was created.
+Runtime files updated for version 1.5.3 live heartbeat behavior and pushed in
+commit `5c7ec44`. Existing untracked `releases/prolific-watcher-v1.5.2.zip`
+was present at startup and was not modified intentionally. No ZIP was created.
 ~~~
 
 ## Current State Summary

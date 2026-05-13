@@ -78,6 +78,13 @@ Keep the central memory files current:
 Never write secrets, tokens, passwords, private API keys, raw bearer tokens, or personal
 Prolific data into memory files.
 
+## Communication Style
+
+When reporting to the owner, use plain language that a non-programmer can follow.
+Explain technical terms only when they matter for a decision. Prefer practical wording
+such as "the plugin now sends a small still-alive signal" over internal protocol names
+unless file names or exact code names are needed.
+
 ## Release Packaging
 
 On explicit request, create a Chrome extension ZIP with:

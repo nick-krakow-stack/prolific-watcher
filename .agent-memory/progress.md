@@ -12,3 +12,5 @@
 - 2026-05-13 - Updated release packaging so ZIP entries are under top-level `prolific-watcher/`; verified temporary package entries and forbidden-file count.
 - 2026-05-13 - Recorded owner routine: do not auto-create ZIPs; bump `manifest.json` version for runtime updates before packaging.
 - 2026-05-13 - Implemented live mode heartbeat bugfix for version `1.5.3`; added `scripts/check-live-heartbeat.js` and verified red/green behavior without creating a ZIP.
+- 2026-05-13 - Pushed live mode heartbeat fix commit `5c7ec44` to GitHub.
+- 2026-05-13 - Recorded owner communication preference for plain non-programmer-friendly feedback.

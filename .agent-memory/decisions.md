@@ -30,3 +30,9 @@
   - minor bump for larger updates, e.g. `1.5.x` -> `1.6.0`.
 - Repo-only changes such as memory, hooks, docs, or packaging scripts do not require
   a Chrome extension version bump.
+
+## 2026-05-13 - Owner Communication Style
+
+- Use plain, practical language in owner-facing feedback.
+- Avoid unnecessary programming jargon.
+- When technical names are useful, briefly explain what they mean for the plugin behavior.

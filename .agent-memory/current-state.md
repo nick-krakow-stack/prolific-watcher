@@ -68,6 +68,7 @@ Only these runtime files should go into Chrome extension ZIP packages.
   without reprocessing studies. `background.js` and `popup.js` use
   `LIVE_FRESHNESS_WINDOW_MS = 20000`, compatible with the 15s hidden-tab poll.
 - `scripts/check-live-heartbeat.js` guards the live heartbeat regression.
+- Live heartbeat fix commit pushed: `5c7ec44 Fix live mode heartbeat`.
 - Cleanup commit pushed: `b19c86c Remove unused extension code`.
 
 ## Operating Model
