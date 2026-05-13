@@ -17,8 +17,8 @@ const background = read('background.js');
 const popup = read('popup.js');
 const manifest = JSON.parse(read('manifest.json'));
 
-if (manifest.version !== '1.5.3') {
-  fail(`manifest.json version is ${manifest.version}, expected 1.5.3`);
+if (manifest.version !== '1.5.4') {
+  fail(`manifest.json version is ${manifest.version}, expected 1.5.4`);
 }
 
 if (!/let\s+lastSentSignature\s*=\s*null\s*;/.test(content)) {
@@ -29,17 +29,44 @@ if (!content.includes("type: 'LIVE_HEARTBEAT'")) {
   fail('content.js must send LIVE_HEARTBEAT for successful unchanged live polls');
 }
 
+const livePollBlock = content.match(/async function pollStudiesLive\(\) \{([\s\S]*?)\n  \}/);
+if (!livePollBlock) {
+  fail('content.js must contain pollStudiesLive');
+} else {
+  const block = livePollBlock[1];
+  const tokenReadIndex = block.indexOf('let token = extractTokenAndUser();');
+  const tokenGuardIndex = block.indexOf('if (!token || !token.accessToken)');
+  const fetchIndex = block.indexOf('const response = await fetch(');
+  const authHeaderIndex = block.indexOf("'Authorization': `Bearer ${token.accessToken}`");
+
+  if (tokenReadIndex === -1) {
+    fail('pollStudiesLive must read the current Prolific login token');
+  }
+  if (tokenGuardIndex === -1 || tokenGuardIndex > fetchIndex) {
+    fail('pollStudiesLive must require a current Prolific login token before fetching studies');
+  }
+  if (authHeaderIndex === -1) {
+    fail('pollStudiesLive must send the Prolific login token in the Authorization header');
+  }
+  if (fetchIndex === -1 || tokenReadIndex > fetchIndex || authHeaderIndex < fetchIndex) {
+    fail('pollStudiesLive must read and attach the Prolific login token on the live studies request');
+  }
+}
+
 const unchangedBlock = content.match(/if\s*\(\s*sig\s*===\s*lastSentSignature\s*\)\s*\{([\s\S]*?)\n\s*\}/);
 if (!unchangedBlock || !unchangedBlock[1].includes("type: 'LIVE_HEARTBEAT'")) {
   fail('content.js unchanged-signature branch must send LIVE_HEARTBEAT before returning');
+}
+if (!unchangedBlock || !unchangedBlock[1].includes('return;')) {
+  fail('content.js unchanged-signature branch must return after LIVE_HEARTBEAT');
 }
 
 if (!/const\s+LIVE_FRESHNESS_WINDOW_MS\s*=\s*(\d+)\s*;/.test(background)) {
   fail('background.js must define LIVE_FRESHNESS_WINDOW_MS');
 } else {
   const value = Number(background.match(/const\s+LIVE_FRESHNESS_WINDOW_MS\s*=\s*(\d+)\s*;/)[1]);
-  if (value < 15000) {
-    fail(`background.js LIVE_FRESHNESS_WINDOW_MS is ${value}, expected at least 15000`);
+  if (value !== 20000) {
+    fail(`background.js LIVE_FRESHNESS_WINDOW_MS is ${value}, expected 20000`);
   }
 }
 
@@ -47,8 +74,8 @@ if (!/const\s+LIVE_FRESHNESS_WINDOW_MS\s*=\s*(\d+)\s*;/.test(popup)) {
   fail('popup.js must define LIVE_FRESHNESS_WINDOW_MS');
 } else {
   const value = Number(popup.match(/const\s+LIVE_FRESHNESS_WINDOW_MS\s*=\s*(\d+)\s*;/)[1]);
-  if (value < 15000) {
-    fail(`popup.js LIVE_FRESHNESS_WINDOW_MS is ${value}, expected at least 15000`);
+  if (value !== 20000) {
+    fail(`popup.js LIVE_FRESHNESS_WINDOW_MS is ${value}, expected 20000`);
   }
 }
 
@@ -70,5 +97,5 @@ if (!heartbeatCase) {
 }
 
 if (!process.exitCode) {
-  console.log('Live heartbeat regression check passed.');
+  console.log('Live auth and heartbeat regression check passed.');
 }

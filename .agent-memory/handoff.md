@@ -1,24 +1,27 @@
 ﻿# Handoff
 
 Last updated: 2026-05-13
-Update mode: Live mode heartbeat finalization
+Update mode: Live mode auth fix
 
 ## Latest Notes
 
-Live mode heartbeat bugfix implemented and awaiting final handoff. Current task
-status is tracked in .agent-memory/current-task.md.
+Live mode auth bugfix is implemented in the working tree and verified. Current
+task status is tracked in .agent-memory/current-task.md. No ZIP was created and
+no commit was made.
 
 ## Git Snapshot
 
 - Branch: main
-- Last commit: 5c7ec44 Fix live mode heartbeat
+- Last commit: 14ff53b Finalize live mode notes
 
 ## Working Tree
 
 ~~~text
-Runtime files updated for version 1.5.3 live heartbeat behavior and pushed in
-commit `5c7ec44`. Existing untracked `releases/prolific-watcher-v1.5.2.zip`
-was present at startup and was not modified intentionally. No ZIP was created.
+Runtime files updated for version 1.5.4 live auth behavior. The Live-mode
+content poll now reads the current Prolific login token and sends it in the
+Authorization header before sending Live updates or heartbeats. Existing
+untracked release ZIPs were present and were not modified intentionally. No ZIP
+was created.
 ~~~
 
 ## Current State Summary

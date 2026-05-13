@@ -17,7 +17,13 @@
   - `Stop`
 - Keep hook behavior quiet and local-only.
 - Codex operates as Orchestrator and delegates implementation to Sub-Agents when tooling supports it.
+- When several tasks can be done independently, split them across multiple
+  Sub-Agents in parallel with clear ownership scopes so the work finishes faster
+  without agents stepping on each other.
 - Chrome release ZIPs are created only on explicit request and include only runtime extension files.
+- The Orchestrator closes completed or unused Sub-Agents when the environment
+  exposes a real close/stop mechanism; hooks must not pretend to close
+  in-process agents.
 
 ## 2026-05-13 - Release Packaging And Versioning
 

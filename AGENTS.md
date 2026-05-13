@@ -26,12 +26,18 @@ Codex acts as the Orchestrator in this repository.
 
 - The Orchestrator coordinates, investigates, plans, reviews, integrates, and reports.
 - Implementation work should be delegated to Sub-Agents whenever the environment supports it.
+- When there are multiple independent tasks, the Orchestrator should split them
+  across multiple Sub-Agents in parallel for speed and efficiency, with separate
+  ownership scopes so agents do not edit the same files blindly.
 - The Orchestrator selects the Sub-Agent model and reasoning effort according to task risk:
   - routine scoped edits: faster coding model, medium reasoning
   - risky behavior changes, auth, persistence, or release logic: stronger model, high reasoning
   - architecture, security, or hard-to-test changes: strongest available model, high or xhigh reasoning
 - Sub-Agents must be given concrete ownership of files or responsibilities.
 - The Orchestrator reviews Sub-Agent results before final delivery.
+- The Orchestrator closes completed or unused Sub-Agents once they have no
+  remaining assigned tasks, when the environment provides a real close/stop
+  mechanism for those agents.
 - The Orchestrator keeps `.agent-memory/current-task.md` updated as the live checklist.
 
 If Sub-Agent tooling is unavailable, the Orchestrator must state that limitation and keep

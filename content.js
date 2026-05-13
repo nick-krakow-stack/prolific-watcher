@@ -192,7 +192,7 @@
   // ============================================================
   // Statt dass der Service Worker pollt, machen wir die API-Calls direkt
   // hier im Tab. Vorteile:
-  // - Cookie-basierte Auth (robuster als Bearer-Token vom Service Worker)
+  // - Aktueller Page-Token plus Cookies aus dem Prolific-Tab
   // - Höhere Frequenz möglich (alle 2-3 Sek)
   // - Kein Service-Worker-Sleep-Problem
   // - Studien werden in "Echtzeit" erkannt - sowohl neue als auch abgelaufene
@@ -203,11 +203,20 @@
 
   async function pollStudiesLive() {
     try {
+      let token = extractTokenAndUser();
+      if (!token || isTokenExpiredOrSoon(token)) {
+        token = await triggerTokenRefresh();
+      }
+      if (!token || !token.accessToken) {
+        return;
+      }
+
       const response = await fetch('https://internal-api.prolific.com/api/v1/participant/studies/?sortBy=published_at&orderBy=asc', {
         method: 'GET',
         credentials: 'include', // Cookies mitschicken
         headers: {
           'Accept': 'application/json, text/plain, */*',
+          'Authorization': `Bearer ${token.accessToken}`
         }
       });
 

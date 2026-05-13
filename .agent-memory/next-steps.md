@@ -4,10 +4,10 @@ Last updated: 2026-05-13
 
 ## Immediate
 
-- Refresh `README.md` so it matches extension version `1.5.3`.
+- Refresh `README.md` so it matches extension version `1.5.4`.
 - Optional: manually reload the unpacked Chrome extension after the live
-  heartbeat fix and confirm the popup stays in Live mode with an unchanged or
-  empty studies list.
+  auth fix and confirm the popup stays in Live mode with an unchanged or empty
+  studies list.
 
 ## Product Backlog
 

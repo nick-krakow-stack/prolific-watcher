@@ -14,3 +14,6 @@
 - 2026-05-13 - Implemented live mode heartbeat bugfix for version `1.5.3`; added `scripts/check-live-heartbeat.js` and verified red/green behavior without creating a ZIP.
 - 2026-05-13 - Pushed live mode heartbeat fix commit `5c7ec44` to GitHub.
 - 2026-05-13 - Recorded owner communication preference for plain non-programmer-friendly feedback.
+- 2026-05-13 - Investigated why `1.5.3` still showed Background; likely cause is Live-mode Prolific request missing the login token while Background mode includes it.
+- 2026-05-13 - Took ownership of uncommitted live auth edits, kept the version `1.5.4` runtime fix, strengthened the live regression check, and added the protocol reminder to close completed or unused agents when supported.
+- 2026-05-13 - Recorded owner workflow preference: split independent tasks across multiple Sub-Agents in parallel when supported, with separate ownership scopes, and close completed or unused agents when the environment provides a real close/stop mechanism.

@@ -40,7 +40,7 @@ Only these runtime files should go into Chrome extension ZIP packages.
 
 ## Known Notes
 
-- `manifest.json` currently reports version `1.5.3`.
+- `manifest.json` currently reports version `1.5.4`.
 - `README.md` still describes older `v1.2` architecture and should be refreshed.
 - The codebase is plain JavaScript/HTML/CSS; there is no package manager or test
   harness yet.
@@ -69,11 +69,20 @@ Only these runtime files should go into Chrome extension ZIP packages.
   `LIVE_FRESHNESS_WINDOW_MS = 20000`, compatible with the 15s hidden-tab poll.
 - `scripts/check-live-heartbeat.js` guards the live heartbeat regression.
 - Live heartbeat fix commit pushed: `5c7ec44 Fix live mode heartbeat`.
+- Live mode auth fix is implemented in the working tree for version `1.5.4`:
+  the Live-mode request reads the same local Prolific login token and sends it
+  as an Authorization header before it can send Live updates or heartbeats.
+- `scripts/check-live-heartbeat.js` now guards Live auth, first empty-list
+  update behavior, unchanged-list heartbeat behavior, exact 20s freshness, and
+  manifest version `1.5.4`.
 - Cleanup commit pushed: `b19c86c Remove unused extension code`.
 
 ## Operating Model
 
 - Codex acts as Orchestrator only.
 - Implementation should be delegated to Sub-Agents when tooling supports it.
+- Completed or unused Sub-Agents should be closed when the environment provides
+  a real close/stop mechanism; hooks should not pretend to close in-process
+  agents.
 - No Cloudflare deployment workflow applies.
 - GitHub is the only remote target.

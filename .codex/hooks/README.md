@@ -27,5 +27,15 @@ The hook script is intentionally quiet:
 - no shell side effects outside memory files
 - robust when hook payload is missing or invalid
 - no Cloudflare, deployment, or browser automation behavior
+- no attempt to close in-process agents; closing completed or unused agents is
+  an orchestrator responsibility when the environment provides a real close/stop
+  mechanism
+
+Orchestrator reminder:
+
+- When several tasks can be handled independently, split them across multiple
+  Sub-Agents in parallel when tooling supports it, with separate ownership scopes.
+- Close completed or unused Sub-Agents when the environment provides a real
+  close/stop mechanism.
 
 The repository protocol is in `AGENTS.md`.
