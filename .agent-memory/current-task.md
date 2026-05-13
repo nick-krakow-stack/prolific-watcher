@@ -11,7 +11,7 @@ Last updated: 2026-05-13
 - [x] Add central memory files.
 - [x] Add release ZIP packaging routine.
 - [x] Run verification checks.
-- [ ] Commit and push setup changes.
+- [x] Commit and push setup changes.
 
 ## Requirements
 
@@ -33,3 +33,4 @@ Last updated: 2026-05-13
 - `node --check content.js`
 - `node --check popup.js`
 - `git diff --check`
+- Commit `afd34f8 Add Codex workflow and packaging routine` pushed to `origin/main`.

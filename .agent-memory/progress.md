@@ -6,3 +6,4 @@
 - 2026-05-13 - Verified packaging with a test ZIP containing only runtime extension files, then removed the test artifact.
 - 2026-05-13 17:11:51 +02:00 - Stop hook ran and refreshed central memory snapshot.
 - 2026-05-13 17:12:28 +02:00 - Stop hook ran and refreshed central memory snapshot.
+- 2026-05-13 - Pushed workflow setup commit `afd34f8` to GitHub.

@@ -13,6 +13,7 @@ studies and tracking Prolific earnings.
 - GitHub remote: `https://github.com/nick-krakow-stack/prolific-watcher.git`
 - Main branch: `main`
 - Initial commit pushed: `2e8479d Initial commit`
+- Workflow setup commit pushed: `afd34f8 Add Codex workflow and packaging routine`
 
 ## Extension Runtime Files
 

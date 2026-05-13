@@ -4,7 +4,6 @@ Last updated: 2026-05-13
 
 ## Immediate
 
-- Commit and push the workflow setup to GitHub.
 - Refresh `README.md` so it matches extension version `1.5.2`.
 
 ## Product Backlog

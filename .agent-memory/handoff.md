@@ -1,7 +1,7 @@
 ﻿# Handoff
 
-Last updated: 2026-05-13 17:12:28 +02:00
-Update mode: Stop
+Last updated: 2026-05-13
+Update mode: Manual finalization
 
 ## Latest Notes
 
@@ -12,17 +12,12 @@ Owner, browser, and review feedback are persisted in .agent-memory/feedback.md.
 ## Git Snapshot
 
 - Branch: main
-- Last commit: 2e8479d Initial commit
+- Last commit: afd34f8 Add Codex workflow and packaging routine
 
 ## Working Tree
 
 ~~~text
-?? .agent-memory/
-?? .codex/
-?? .gitattributes
-?? AGENTS.md
-?? releases/
-?? scripts/
+Memory finalization pending commit.
 ~~~
 
 ## Current State Summary
