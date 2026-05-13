@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "name": "Prolific Watcher",
-  "version": "1.5.2",
+  "version": "1.5.3",
   "description": "Überwacht Prolific im Hintergrund auf neue Studien und trackt deine Einnahmen.",
   "permissions": [
     "alarms",

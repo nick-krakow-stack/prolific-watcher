@@ -40,7 +40,7 @@ Only these runtime files should go into Chrome extension ZIP packages.
 
 ## Known Notes
 
-- `manifest.json` currently reports version `1.5.2`.
+- `manifest.json` currently reports version `1.5.3`.
 - `README.md` still describes older `v1.2` architecture and should be refreshed.
 - The codebase is plain JavaScript/HTML/CSS; there is no package manager or test
   harness yet.
@@ -62,6 +62,12 @@ Only these runtime files should go into Chrome extension ZIP packages.
 - Low-risk dead-code cleanup removed unused helper declarations from
   `background.js` and `popup.js`; `scripts/check-dead-code-cleanup.js` guards
   against those exact markers returning.
+- Live mode heartbeat fix is in progress: `content.js` sends the first successful
+  empty live poll as `LIVE_STUDIES`, sends `LIVE_HEARTBEAT` for successful
+  unchanged-signature polls, and `background.js` refreshes `lastLiveUpdate`
+  without reprocessing studies. `background.js` and `popup.js` use
+  `LIVE_FRESHNESS_WINDOW_MS = 20000`, compatible with the 15s hidden-tab poll.
+- `scripts/check-live-heartbeat.js` guards the live heartbeat regression.
 - Cleanup commit pushed: `b19c86c Remove unused extension code`.
 
 ## Operating Model

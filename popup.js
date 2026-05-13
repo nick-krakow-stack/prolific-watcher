@@ -1,4 +1,5 @@
 const $ = (id) => document.getElementById(id);
+const LIVE_FRESHNESS_WINDOW_MS = 20000; // compatible with 15s hidden-tab live polling
 const els = {
   // Header
   mainBtn: $('mainBtn'),
@@ -354,11 +355,11 @@ function render(state) {
 
   // Status Dot
   els.statusDot.classList.remove('is-running', 'is-paused', 'is-error');
-  // Live-Mode: prüfen ob in letzten 10 Sek ein Live-Update kam
+  // Live-Mode: prüfen ob kürzlich ein Live-Update kam
   let liveActive = false;
   if (state.lastLiveUpdate) {
     const ageMs = Date.now() - new Date(state.lastLiveUpdate).getTime();
-    liveActive = ageMs < 10000;
+    liveActive = ageMs < LIVE_FRESHNESS_WINDOW_MS;
   }
   switch (state.lastStatus) {
     case 'active':

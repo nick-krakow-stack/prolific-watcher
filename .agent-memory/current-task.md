@@ -2,34 +2,34 @@
 
 Last updated: 2026-05-13
 
-## Active Task: Package ZIP Top-Level Folder And Version Routine
+## Active Task: Live Mode Heartbeat Bugfix
 
 - [x] Read startup protocol, memory files, and git status.
-- [x] Demonstrate current package layout lacks `prolific-watcher/`.
-- [x] Update `scripts/package-extension.ps1`.
-- [x] Re-run packaging and inspect ZIP entries.
-- [x] Confirm no repository-only files are included.
-- [x] Record that ZIPs are only created on explicit request, not automatically.
-- [x] Record extension version bump routine.
-- [x] Run final git status and report changed files.
+- [x] Add a lightweight regression/static check for live heartbeat behavior.
+- [x] Run the new check against current code and confirm it fails.
+- [x] Bump `manifest.json` from `1.5.2` to `1.5.3`.
+- [x] Update live content polling to send the first successful update even when empty.
+- [x] Add an unchanged-signature live heartbeat without reprocessing studies.
+- [x] Use a live freshness window compatible with the 15s hidden-tab interval.
+- [x] Run required verification.
+- [x] Update memory files and final git status.
 
-## Requirements
+## Constraints
 
-1. Generated release ZIPs must contain a top-level `prolific-watcher/` folder.
-2. Chrome runtime files must live inside that folder.
-3. Repository-only files such as `.agent-memory`, `.codex`, `scripts`, Markdown docs, release tooling, and `.tmp` must not be included.
-4. Do not touch runtime extension files.
-5. Do not commit.
-6. Do not create a new release ZIP now; only remember the future behavior.
-7. Runtime updates must bump `manifest.json` version:
-   - patch for small changes, e.g. `1.5.2` -> `1.5.3`.
-   - minor for larger updates, e.g. `1.5.x` -> `1.6.0`.
-8. Repo-only changes do not require an extension version bump.
+- Do not change API URLs, notification behavior, auth token extraction, or earnings logic.
+- Do not create a ZIP.
+- Do not touch `releases/prolific-watcher-v1.5.2.zip`.
 
 ## Verification
 
-- Pre-change package check to temp output showed root-level entries such as `manifest.json`, `background.js`, and `icons\...`, with no top-level `prolific-watcher/` folder.
-- Post-change package check to temp output showed entries including `prolific-watcher/manifest.json`, `prolific-watcher/background.js`, `prolific-watcher/content.js`, `prolific-watcher/popup.html`, `prolific-watcher/popup.css`, `prolific-watcher/popup.js`, and `prolific-watcher/icons/...`.
-- Post-change ZIP inspection reported `MISSING_EXPECTED_COUNT=0`, `BAD_PREFIX_COUNT=0`, and `FORBIDDEN_COUNT=0`.
-- Final temp package inspection reported `ENTRY_COUNT=18`, `MISSING_REQUIRED_COUNT=0`, `ICON_ENTRY_COUNT=12`, `BAD_PREFIX_COUNT=0`, and `FORBIDDEN_COUNT=0`.
+- Pre-fix `node scripts/check-live-heartbeat.js` exited 1 and reported the missing
+  heartbeat behavior, old freshness literal, and version `1.5.2`.
+- Post-fix `node scripts/check-live-heartbeat.js` exited 0.
+- `node --check content.js` exited 0.
+- `node --check background.js` exited 0.
+- `node --check popup.js` exited 0.
+- `node --check scripts/check-live-heartbeat.js` exited 0.
 - `git diff --check` exited 0.
+- Final `git status --short` showed modified runtime and memory files, new
+  `scripts/check-live-heartbeat.js`, and the pre-existing untracked
+  `releases/prolific-watcher-v1.5.2.zip`.

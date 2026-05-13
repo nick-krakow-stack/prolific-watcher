@@ -21,6 +21,7 @@ const ALARM_EARNINGS = 'prolific-earnings-sync';
 // + einen Keepalive um den Service Worker am Leben zu halten.
 const SUBMINUTE_THRESHOLD_MIN = 1.0; // ab 1 Min nutzen wir Alarms, darunter setTimeout
 const KEEPALIVE_INTERVAL_SEC = 25; // Service Worker einschläft nach ~30s Inaktivität
+const LIVE_FRESHNESS_WINDOW_MS = 20000; // compatible with 15s hidden-tab live polling
 
 let subMinuteTimer = null; // setTimeout-Handle für Sub-Minute-Polling
 let keepaliveInterval = null; // setInterval-Handle für Service-Worker-Wachhalten
@@ -564,11 +565,11 @@ async function checkForStudies() {
     return;
   }
 
-  // Wenn Live-Mode kürzlich aktiv war (< 10 Sek), Service-Worker-Poll überspringen.
+  // Wenn Live-Mode kürzlich aktiv war, Service-Worker-Poll überspringen.
   // Live-Polling im Tab ist viel frischer.
   if (settings.lastLiveUpdate) {
     const ageMs = Date.now() - new Date(settings.lastLiveUpdate).getTime();
-    if (ageMs < 10000) {
+    if (ageMs < LIVE_FRESHNESS_WINDOW_MS) {
       // Live-Mode aktiv → nur Token-Refresh-Check, keine API-Calls
       await setSettings({ lastCheck: new Date().toISOString() });
       return;
@@ -1007,6 +1008,15 @@ chrome.runtime.onMessage.addListener((msg, sender, sendResponse) => {
                 await updateIcon('running');
                 await chrome.notifications.clear(NOTIF_AUTH_ERROR);
               }
+            }
+          }
+          sendResponse({ ok: true });
+          break;
+        case 'LIVE_HEARTBEAT':
+          {
+            const s = await getSettings();
+            if (s.isRunning) {
+              await setSettings({ lastLiveUpdate: new Date().toISOString() });
             }
           }
           sendResponse({ ok: true });

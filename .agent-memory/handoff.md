@@ -1,13 +1,12 @@
 ﻿# Handoff
 
 Last updated: 2026-05-13
-Update mode: Packaging routine update
+Update mode: Live mode heartbeat bugfix
 
 ## Latest Notes
 
-Packaging routine updated so generated ZIP entries are inside a top-level
-`prolific-watcher/` folder. Current task status is tracked in
-.agent-memory/current-task.md.
+Live mode heartbeat bugfix implemented and awaiting final handoff. Current task
+status is tracked in .agent-memory/current-task.md.
 
 ## Git Snapshot
 
@@ -17,9 +16,10 @@ Packaging routine updated so generated ZIP entries are inside a top-level
 ## Working Tree
 
 ~~~text
-Packaging script, packaging protocol wording, and memory files modified.
-Existing untracked releases/prolific-watcher-v1.5.2.zip was present at startup
-and was not modified intentionally.
+Runtime files updated for version 1.5.3 live heartbeat behavior, plus a new
+static regression check under scripts/. Existing untracked
+releases/prolific-watcher-v1.5.2.zip was present at startup and was not
+modified intentionally. No ZIP was created.
 ~~~
 
 ## Current State Summary

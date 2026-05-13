@@ -199,7 +199,7 @@
 
   let liveTimer = null;
   let liveInterval = 3000; // 3 Sekunden Default
-  let lastSentSignature = ''; // damit wir nicht doppelt schicken
+  let lastSentSignature = null; // null erzwingt ein erstes Update, auch bei leerer Liste
 
   async function pollStudiesLive() {
     try {
@@ -225,7 +225,12 @@
       // Signatur bauen aus den Studien-IDs, damit wir nicht jedes Mal alle Daten schicken
       const sig = studies.map(s => s.id).sort().join(',');
       if (sig === lastSentSignature) {
-        // Nichts geändert → kein Message-Roundtrip nötig
+        // Erfolgreicher Poll ohne Studien-Änderung: Live-Heartbeat erneuern,
+        // ohne die Studienliste erneut zu verarbeiten.
+        chrome.runtime.sendMessage(
+          { type: 'LIVE_HEARTBEAT' },
+          () => { if (chrome.runtime.lastError) { /* ignore */ } }
+        );
         return;
       }
       lastSentSignature = sig;

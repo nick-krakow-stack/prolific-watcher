@@ -4,14 +4,15 @@ Last updated: 2026-05-13
 
 ## Immediate
 
-- Refresh `README.md` so it matches extension version `1.5.2`.
-- Optional: manually reload the unpacked Chrome extension after the cleanup and
-  confirm popup open/start/stop still works.
+- Refresh `README.md` so it matches extension version `1.5.3`.
+- Optional: manually reload the unpacked Chrome extension after the live
+  heartbeat fix and confirm the popup stays in Live mode with an unchanged or
+  empty studies list.
 
 ## Product Backlog
 
 - Consider splitting `background.js` into smaller modules if the project gains a build step.
-- Decide whether to add a lightweight automated regression harness for pure helper logic.
+- Consider adding a broader automated regression harness for pure helper logic.
 - Decide release naming convention after the first packaged ZIP is created.
 
 ## Release Routine
