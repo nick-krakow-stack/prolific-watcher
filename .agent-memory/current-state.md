@@ -55,6 +55,7 @@ Only these runtime files should go into Chrome extension ZIP packages.
 - Low-risk dead-code cleanup removed unused helper declarations from
   `background.js` and `popup.js`; `scripts/check-dead-code-cleanup.js` guards
   against those exact markers returning.
+- Cleanup commit pushed: `b19c86c Remove unused extension code`.
 
 ## Operating Model
 

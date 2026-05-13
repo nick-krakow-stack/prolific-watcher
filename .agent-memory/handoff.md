@@ -1,7 +1,7 @@
 ﻿# Handoff
 
 Last updated: 2026-05-13
-Update mode: Manual finalization
+Update mode: Cleanup finalization
 
 ## Latest Notes
 
@@ -12,12 +12,12 @@ Owner, browser, and review feedback are persisted in .agent-memory/feedback.md.
 ## Git Snapshot
 
 - Branch: main
-- Last commit: afd34f8 Add Codex workflow and packaging routine
+- Last commit: b19c86c Remove unused extension code
 
 ## Working Tree
 
 ~~~text
-Memory finalization pending commit.
+Memory finalization pending commit for cleanup handoff.
 ~~~
 
 ## Current State Summary
