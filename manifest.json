@@ -1,0 +1,46 @@
+{
+  "manifest_version": 3,
+  "name": "Prolific Watcher",
+  "version": "1.5.2",
+  "description": "Überwacht Prolific im Hintergrund auf neue Studien und trackt deine Einnahmen.",
+  "permissions": [
+    "alarms",
+    "notifications",
+    "storage",
+    "tabs",
+    "scripting",
+    "downloads"
+  ],
+  "host_permissions": [
+    "https://internal-api.prolific.com/*",
+    "https://app.prolific.com/*",
+    "https://api.frankfurter.app/*"
+  ],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "content_scripts": [
+    {
+      "matches": ["https://app.prolific.com/*"],
+      "js": ["content.js"],
+      "run_at": "document_idle",
+      "all_frames": false
+    }
+  ],
+  "action": {
+    "default_popup": "popup.html",
+    "default_title": "Prolific Watcher",
+    "default_icon": {
+      "16": "icons/icon-stopped-16.png",
+      "32": "icons/icon-stopped-32.png",
+      "48": "icons/icon-stopped-48.png",
+      "128": "icons/icon-stopped-128.png"
+    }
+  },
+  "icons": {
+    "16": "icons/icon-stopped-16.png",
+    "32": "icons/icon-stopped-32.png",
+    "48": "icons/icon-stopped-48.png",
+    "128": "icons/icon-stopped-128.png"
+  }
+}
